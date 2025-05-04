@@ -46,7 +46,7 @@ chmod +x traffic-shaper.sh
 创建systemd服务配置文件：
 
 ```bash
-cp traffic-shaper.sh /etc/systemd/system/traffic-shaper.servicc
+cp traffic-shaper.service /etc/systemd/system/traffic-shaper.service
 ```
 
 ### 4. 配置脚本参数
