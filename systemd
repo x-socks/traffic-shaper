@@ -1,0 +1,20 @@
+[Unit]
+Description=智能网络流量控制服务
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/traffic-shaper.sh
+Restart=on-failure
+# 仅当网络可用时重启
+RestartCondition=on-failure
+RestartSec=30s
+
+# 安全设置
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
