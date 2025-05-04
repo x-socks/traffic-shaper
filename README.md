@@ -1,4 +1,4 @@
-# TrafficLimitAvoid 智能流量控制系统
+# Traffic-shaper 智能流量控制系统
 
 一个系统级的智能流量控制解决方案，帮助避开VPS限速策略。适用于所有网络传输场景，不限于特定应用或下载任务。
 
@@ -46,10 +46,8 @@ chmod +x traffic-shaper.sh
 创建systemd服务配置文件：
 
 ```bash
-sudo nano /etc/systemd/system/traffic-shaper.service
+cp traffic-shaper.sh /etc/systemd/system/traffic-shaper.servicc
 ```
-
-将`traffic-shaper.service`的内容复制到此文件中。
 
 ### 4. 配置脚本参数
 
