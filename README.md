@@ -32,18 +32,13 @@
 
 ### 1. 下载脚本文件
 
-首先，在您的VPS上创建脚本文件：
-
 ```bash
-sudo nano /usr/local/bin/traffic-shaper.sh
-```
-
-将`traffic-shaper.sh`的内容复制到此文件中。
-
-### 2. 设置执行权限
-
-```bash
-sudo chmod +x /usr/local/bin/traffic-shaper.sh
+# 下载脚本文件
+curl -o traffic-shaper.sh https://raw.githubusercontent.com/x-socks/traffic-shaper/refs/heads/main/traffic-shaper.sh
+# 下载服务文件
+curl -o traffic-shaper.service https://raw.githubusercontent.com/x-socks/traffic-shaper/refs/heads/main/traffic-shaper.service
+# 给脚本文件赋予执行权限
+chmod +x traffic-shaper.sh
 ```
 
 ### 3. 设置系统服务
