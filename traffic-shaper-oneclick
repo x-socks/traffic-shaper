@@ -28,26 +28,6 @@ THROTTLE_BANDWIDTH=""
 THROTTLE_DURATION=""
 MONITOR_INTERVAL=""
 
-# 显示主菜单
-show_menu() {
-    clear
-    echo -e "${GREEN}=====================================${NC}"
-    echo -e "${GREEN}      系统级智能流量控制方案        ${NC}"
-    echo -e "${GREEN}=====================================${NC}"
-    echo -e "${CYAN}请选择操作:${NC}"
-    echo -e "${YELLOW}1.${NC} 安装并配置流量控制"
-    echo -e "${YELLOW}2.${NC} 启动流量控制服务"
-    echo -e "${YELLOW}3.${NC} 停止流量控制服务"
-    echo -e "${YELLOW}4.${NC} 重启流量控制服务"
-    echo -e "${YELLOW}5.${NC} 查看服务状态"
-    echo -e "${YELLOW}6.${NC} 查看实时日志"
-    echo -e "${YELLOW}7.${NC} 修改配置"
-    echo -e "${YELLOW}8.${NC} 完全还原系统 (卸载)"
-    echo -e "${YELLOW}9.${NC} 退出"
-    echo -e "${GREEN}=====================================${NC}"
-    echo -n "请输入选项 [1-9]: "
-}
-
 # 检查是否为root用户
 check_root() {
     if [ "$(id -u)" != "0" ]; then
@@ -639,50 +619,77 @@ uninstall_system() {
     fi
 }
 
-# 主函数
+# 主函数 - 使用select语句
 main() {
     check_root
     
     while true; do
-        show_menu
-        read choice
+        clear
+        echo -e "${GREEN}=====================================${NC}"
+        echo -e "${GREEN}      系统级智能流量控制方案        ${NC}"
+        echo -e "${GREEN}=====================================${NC}"
+        echo ""
         
-        case $choice in
-            1)
-                install_traffic_control
-                ;;
-            2)
-                start_service
-                ;;
-            3)
-                stop_service
-                ;;
-            4)
-                restart_service
-                ;;
-            5)
-                show_status
-                ;;
-            6)
-                show_logs
-                ;;
-            7)
-                modify_config
-                ;;
-            8)
-                uninstall_system
-                ;;
-            9)
-                echo -e "${GREEN}[+] 退出${NC}"
-                exit 0
-                ;;
-            *)
-                echo -e "${RED}[!] 无效选项，请重新选择${NC}"
-                ;;
-        esac
+        PS3="请选择操作 [1-9]: "
+        options=(
+            "安装并配置流量控制"
+            "启动流量控制服务"
+            "停止流量控制服务"
+            "重启流量控制服务"
+            "查看服务状态"
+            "查看实时日志"
+            "修改配置"
+            "完全还原系统 (卸载)"
+            "退出"
+        )
+        
+        select opt in "${options[@]}"; do
+            case $REPLY in
+                1)
+                    install_traffic_control
+                    break
+                    ;;
+                2)
+                    start_service
+                    break
+                    ;;
+                3)
+                    stop_service
+                    break
+                    ;;
+                4)
+                    restart_service
+                    break
+                    ;;
+                5)
+                    show_status
+                    break
+                    ;;
+                6)
+                    show_logs
+                    break
+                    ;;
+                7)
+                    modify_config
+                    break
+                    ;;
+                8)
+                    uninstall_system
+                    break
+                    ;;
+                9)
+                    echo -e "${GREEN}[+] 退出${NC}"
+                    exit 0
+                    ;;
+                *)
+                    echo -e "${RED}[!] 无效选项: $REPLY，请输入1-9${NC}"
+                    ;;
+            esac
+        done
         
         echo ""
-        read -p "按回车键继续..."
+        echo -e "${YELLOW}按回车键返回主菜单...${NC}"
+        read -r
     done
 }
 
